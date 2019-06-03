@@ -1,5 +1,7 @@
 {
   "name": "homework",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

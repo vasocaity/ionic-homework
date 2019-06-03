@@ -1,14 +1,68 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-item>
+      <ion-button title="browse" color="light" (click)="goToContactPage()">
+        <ion-icon name="contact"></ion-icon>
+      </ion-button>
+      <ion-searchbar #myInput placeholder="ชื่อ-นามสกุล" id="search" [(ngModel)]="jc" (keyup.enter)="search()" clearInput>
+      </ion-searchbar>
+      <ion-button *ngIf="isTablet()" (click)="search()">ค้นหา</ion-button>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <div *ngIf="loading">
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-list-header>
+      <div class="ion-padding custom-skeleton">
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      </div>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-list-header>
+      <div class="ion-padding custom-skeleton">
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      </div>
+    </ion-list>
+  </div>
+  <div *ngIf="!loading">
+
+    <ion-item *ngIf="persons.length > 0">
+      <ion-label slot="start">บุคคล</ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item *ngFor="let person of persons; index as i" (click)="goToDetail()" detail>
+        <ion-col size="6">
+          {{i + 1}}. {{person.firstname}} {{person.lastname}}
+        </ion-col>
+        <ion-col size="6">
+          {{person.status}}
+        </ion-col>
+      </ion-item>
+    </ion-list>
+    <ion-item *ngIf="corps.length > 0">
+      <ion-label slot="start">นิติบุคคล</ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item *ngFor="let corp of corps; index as i" (click)="goToDetail()" detail>
+        <ion-col size="6">
+          {{i + 1}}. {{corp.firstname}} {{corp.lastname}}
+        </ion-col>
+        <ion-col size="6">
+          {{corp.status}}
+        </ion-col>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
